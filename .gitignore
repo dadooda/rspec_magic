@@ -1,0 +1,26 @@
+
+# General Ruby, sorted by first letter.
+/.bundle/
+/coverage/
+/doc/
+/vendor/bundle/
+/.yardoc/
+
+# Project-specific.
+/*.gem
+
+# Old etc.
+*.old*
+*.orig
+/*.patch
+*.ref*
+
+# Nonpersistent stuff.
+TODO.md
+
+# Shared VS Code settings.
+/.vscode/*
+!/.vscode/*.json
+
+# Custom VS Code settings.
+/*.code-workspace
