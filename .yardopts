@@ -1,0 +1,4 @@
+
+--default-return void
+
+{lib}/**/*.rb

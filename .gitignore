@@ -1,4 +1,14 @@
 
+# General Ruby, sorted by first letter.
+/.bundle/
+/coverage/
+/doc/
+/vendor/bundle/
+/.yardoc/
+
+# Project-specific.
+/*.gem
+
 # Old etc.
 *.old*
 *.orig
