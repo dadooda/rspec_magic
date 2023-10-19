@@ -57,7 +57,7 @@ module RSpecMagic; module Stable
   end # module
 
   # Activate.
-  defined?(RSpec) and RSpec.configure do |config|
+  defined?(RSpec) && RSpec.respond_to?(:configure) and RSpec.configure do |config|
     config.extend UseMethodDiscovery
   end
 end; end
