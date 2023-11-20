@@ -36,7 +36,6 @@ module RSpecMagic; module Unstable
           begin; include_context d; rescue ArgumentError; end
         end
 
-        # TODO: Fin.
         # # A hack. We've got 2 sub-environments: plain and Rails, which share the same directory root.
         # # If we attempt to create 2 root contexts, RSpec will overwrite one with another.
         # # Hence we use distinct special names for root contexts and load them by hand.
