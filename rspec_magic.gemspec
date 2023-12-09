@@ -3,7 +3,7 @@ require_relative "lib/rspec_magic/version"
 
 Gem::Specification.new do |s|
   s.name = "rspec_magic"
-  s.summary = "Attribute methods for the Disposable Computational Objects"
+  s.summary = "RSpec extensions"
   s.version = RSpecMagic::VERSION
 
   s.authors = ["Alex Fortuna"]
