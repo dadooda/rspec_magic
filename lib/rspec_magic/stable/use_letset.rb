@@ -4,14 +4,12 @@ module RSpecMagic; module Stable
   # Define methods to manage a set of custom +let+ variables which act as a distinct collection.
   #
   #   describe "…" do
-  #     use_letset(:let_a, :attrs)
+  #     use_letset :let_a, :attrs
   #   end
   #
   # OPTIMIZE: Declarative mode plays super nicely with `context_when`.
   #
   # ----
-  #
-  # Grr Prr!
   #
   # Better implementation of {.use_custom_let}, which is fully context-aware.
   # Name is ugly on purpose to make all invocations explicit.
@@ -67,44 +65,46 @@ module RSpecMagic; module Stable
   # NOTE: At the moment the feature only works if <tt>use_custom_let</tt> is invoked from a
   # top-level (<tt>RSpec.describe</tt>) context. Correct usage in sub-context is yet not possible.
   module UseLetset
-    # Define the collection.
-    # @param let_method [Symbol]
-    # @param collection_let [Symbol]
-    # @return [void]
-    def use_letset(let_method, collection_let)
-      keys_m = "_#{collection_let}_keys".to_sym
+    module Exports
+      # Define the collection.
+      # @param let_method [Symbol]
+      # @param collection_let [Symbol]
+      # @return [void]
+      def use_letset(let_method, collection_let)
+        keys_m = "_#{collection_let}_keys".to_sym
 
-      # See "Implementation notes" on failed implementation of "collection only" mode.
+        # See "Implementation notes" on failed implementation of "collection only" mode.
 
-      # E.g. "_data_keys" or something.
-      define_singleton_method(keys_m) do
-        if instance_variable_defined?(k = "@#{keys_m}")
-          instance_variable_get(k)
-        else
-          # Start by copying superclass's known vars or default to `[]`.
-          instance_variable_set(k, (superclass.send(keys_m).dup rescue []))
+        # E.g. "_data_keys" or something.
+        define_singleton_method(keys_m) do
+          if instance_variable_defined?(k = "@#{keys_m}")
+            instance_variable_get(k)
+          else
+            # Start by copying superclass's known vars or default to `[]`.
+            instance_variable_set(k, (superclass.send(keys_m).dup rescue []))
+          end
         end
-      end
 
-      define_singleton_method let_method, ->(k, &block) do
-        (send(keys_m) << k).uniq!
-        # Create a `let` variable unless it's a declaration call (`let_a(:name)`).
-        let(k, &block) if block
-      end
+        define_singleton_method let_method, ->(k, &block) do
+          (send(keys_m) << k).uniq!
+          # Create a `let` variable unless it's a declaration call (`let_a(:name)`).
+          let(k, &block) if block
+        end
 
-      define_method(collection_let) do
-        {}.tap do |h|
-          self.class.send(keys_m).each do |k|
-            h[k] = public_send(k) if respond_to?(k)
+        define_method(collection_let) do
+          {}.tap do |h|
+            self.class.send(keys_m).each do |k|
+              h[k] = public_send(k) if respond_to?(k)
+            end
           end
         end
       end
-    end
-  end
+    end # Exports
+  end # module
 
   # Activate.
   defined?(RSpec) && RSpec.respond_to?(:configure) and RSpec.configure do |config|
-    config.extend UseLetset
+    config.extend UseLetset::Exports
   end
 end; end
 

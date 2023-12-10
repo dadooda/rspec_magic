@@ -1,7 +1,6 @@
 
 require "json"
 
-# OPTIMIZE: Retro-check neighbours.
 describe ".context_when" do
   context "when default" do
     context_when a: 1, "b" => 2, x: "y" do

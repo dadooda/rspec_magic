@@ -1,5 +1,8 @@
 
+"LODoc"
+
 module RSpecMagic
+  # Unstable features.
   module Unstable
   end
 end

@@ -12,10 +12,10 @@ module RSpecMagic; module Stable
   module AliasMethod
   end
 
-  # Activate.
-  # NOTE: `RSpec` has an autoloader of its own. Constants might not respond until you touch them.
+  # NOTE: `RSpec` has an autoloader of its own. Constants might not respond until we touch them.
   begin; RSpec::Matchers; rescue NameError; end
 
+  # Activate.
   defined?(RSpec::Matchers) && RSpec::Matchers.respond_to?(:define) and RSpec::Matchers.define(:alias_method) do |new_name, old_name|
     match do |subject|
       expect(subject.method(new_name)).to eq subject.method(old_name)

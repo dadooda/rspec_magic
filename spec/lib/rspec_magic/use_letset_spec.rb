@@ -1,9 +1,8 @@
 
-# OPTIMIZE: Revive.
 describe ".use_letset" do
   describe "straight usage" do
-    use_letset(:let_a, :attrs)
-    use_letset(:let_d, :data)
+    use_letset :let_a, :attrs
+    use_letset :let_d, :data
 
     # Same-level definition. Important case.
     let_a(:name) { "Joe" }
@@ -41,7 +40,7 @@ describe ".use_letset" do
   end
 
   describe "declarative (no block) usage" do
-    use_letset(:let_a, :attrs)
+    use_letset :let_a, :attrs
 
     let_a(:name)
 
