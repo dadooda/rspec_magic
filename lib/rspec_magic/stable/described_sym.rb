@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# TODO: CUP.
-require "active_support"
-
 module RSpecMagic; module Stable
   # Transform <tt>described_class</tt> into an underscored symbol.
   #
@@ -24,18 +21,6 @@ module RSpecMagic; module Stable
     module Exports
       # @return [Symbol]
       def described_sym
-        klass_name = "CSVEntry"
-
-        # p "ActiveSupport::Inflector.inflections.acronym_regex", ActiveSupport::Inflector.inflections.acronym_regex
-        # p "ActiveSupport::Inflector.inflections.acronyms", ActiveSupport::Inflector.inflections.acronyms
-        # # TODO: Fin.
-
-        # usc = ActiveSupport::Inflector.underscore(klass_name)
-        # p "usc", usc
-
-        usca = Util.underscore(klass_name)
-        p "usca", usca
-
         Util.underscore(described_class.to_s).to_sym
       end
       alias_method :me, :described_sym
@@ -71,5 +56,3 @@ module RSpecMagic; module Stable
     config.include DescribedSym::Exports
   end
 end; end
-
-# OPTIMIZE: Add tests.

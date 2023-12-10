@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+"LODoc"
+
 module RSpecMagic; module Stable
   # Define methods to manage a set of custom +let+ variables which act as a distinct collection.
   #
@@ -7,9 +9,9 @@ module RSpecMagic; module Stable
   #     use_letset :let_a, :attrs
   #   end
   #
-  # OPTIMIZE: Declarative mode plays super nicely with `context_when`.
-  #
   # ----
+  #
+  # (words about declarative mode playing super nicely with `context_when`)
   #
   # Better implementation of {.use_custom_let}, which is fully context-aware.
   # Name is ugly on purpose to make all invocations explicit.
