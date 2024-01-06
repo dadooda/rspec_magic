@@ -22,7 +22,7 @@ describe "`#described_sym` and friends" do
       end
 
       describe PageTitle::Style do
-        # NOTE: That's how it works. Not sure if it's utterly useful though.
+        # NOTE: That's how it works. Not sure if that's utterly useful though.
         it { is_expected.to eq :"page_title/style" }
       end
     end # context "when the class is named like …"

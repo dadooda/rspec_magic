@@ -10,13 +10,15 @@
 - [Что это?](#что-это)
 - [Установка](#установка)
 - [Применение](#применение)
-- [🟠Фичи](#фичи)
+- [Фичи](#фичи)
   - [`alias_method`](#alias_method)
   - [`context_when`](#context_when)
   - [`described_sym`](#described_sym)
-  - [`include_dir_context`](#include_dir_context)
+  - [`include_dir_context` ♒︎](#include_dir_context-︎)
   - [`use_letset`](#use_letset)
   - [`use_method_discovery`](#use_method_discovery)
+- [Подробно](#подробно)
+  - [Про «Применение»](#про-применение)
 - [Copyright](#copyright)
 
 <!-- /code_chunk_output -->
@@ -25,11 +27,13 @@
 
 *An English version of this text is also available: [README.md](README.md).*
 
-RSpecMagic — набор расширений для написания более компактных и ёмких RSpec-тестов.
+RSpecMagic — набор расширений для написания компактных и ёмких RSpec-тестов.
 
 ## Установка
 
-Добавляем в `Gemfile` нашего проекта:
+> 💡 *Предполагается, что RSpec в нашем проекте мы уже настроили.*
+
+Добавляем в `Gemfile`:
 
 ```ruby
 gem "rspec_magic"
@@ -38,28 +42,31 @@ gem "rspec_magic"
 
 ## Применение
 
-Там и сям, обычно это `spec_helper.rb`:
+Добавляем в автозагрузку RSpec (обычно это `spec/spec_helper.rb`):
 
 ```ruby
 require "rspec_magic/stable"
 require "rspec_magic/unstable"
 
-# TODO: Здесь `config.spec_path`.
+RSpecMagic::Config.spec_path = File.expand_path(__dir__)
 ```
 
-> 💡 *Работает всё, просто то, что в наборе `unstable`, появилось недавно,*
-> *и может измениться в ближайших версиях.*
-> 👉Или просто объяснить — `unstable` это то, что появилось недавно и ещё может меняться, то, сё.
+См. также [Подробно](#про-применение).
 
-Можно включить только конкретные фичи:
-
-👉TODO — require конкретно.
-
-## 🟠Фичи
+## Фичи
 
 ### `alias_method`
 
-👉Это такая-то хрень.
+💧💧💧 ВЫШЕ ВСЁ ЧИСТО! 💧💧💧
+
+Method alias matcher.
+Originally from https://gist.github.com/1950961, but heavily reworked consistency-wise.
+
+```ruby
+describe User do
+  it { is_expected.to alias_method(:admin?, :is_admin) }
+end
+```
 
 ### `context_when`
 
@@ -84,14 +91,40 @@ context "when { name: \"Joe\", age: 25 }" do
 end
 ```
 
+= Features
+
+1.
+
+Prepend +x+ to +context_when+ to exclude it:
+
+```ruby
+xcontext_when … do
+  …
+end
+```
+
+2.
+
+Define a custom formatter via +_context_when_formatter+:
+
+```ruby
+context "…" do
+  def self._context_when_formatter(h)
+    "when #{h.to_json}"
+  end
+
+  …
+end
+```
+
 ### `described_sym`
 
 Transform <tt>described_class</tt> into an underscored symbol.
 
 ```ruby
 describe UserProfile do
-    it { expect(described_sym).to eq :user_profile }
-    it { expect(me).to eq :user_profile }
+  it { expect(described_sym).to eq :user_profile }
+  it { expect(me).to eq :user_profile }
 end
 ```
 
@@ -99,13 +132,13 @@ With a factory:
 
 ```ruby
 describe UserProfile do
-    let(:obj1) { create described_sym }
-    let(:obj2) { create me }
-    …
+  let(:obj1) { create described_sym }
+  let(:obj2) { create me }
+  …
 end
 ```
 
-### `include_dir_context`
+### `include_dir_context` ♒︎
 
 👉Украл тезисы с Гитхупа, этой штуке тыща лет.
 
@@ -148,9 +181,18 @@ describe do
 end
 ```
 
+Бла-бла, `let_a` может работать и как обычный `let`:
+
+```ruby
+let_a(:name) { "Joe" }
+let_a(:age) { 25 }
+```
+
+Такой вариант применения более редок, но иногда тоже бывает полезен.
+
 ### `use_method_discovery`
 
-Создаём автоматическую `let`-переменную, содержащую название метода или action,
+Создаём автоматическую `let`-переменную, содержащую имя метода или action,
 вычисленное из текста вышестоящего `describe`.
 
 ```ruby
@@ -160,7 +202,6 @@ describe do
   subject { m }
 
   describe "#first_name" do
-    # TODO: Поддерживается разумная вложенность.
     it { is_expected.to eq :first_name }
   end
 
@@ -169,6 +210,7 @@ describe do
   end
 
   describe "GET some_action" do
+    # TODO: Поддерживается разумная вложенность.
     it { is_expected.to eq :some_action }
   end
 end
@@ -176,7 +218,21 @@ end
 
 Бла-бла, «срабатывает» тот describe, у которого текст отформатирован и опознан.
 Опознашка — это метод такой-то.
+В примере выше — это `"GET some_action"`.
 👉Пример, детали.
+
+## Подробно
+
+### Про «Применение»
+
+1. `stable` и `unstable` — наборы фич. В набор `unstable` входят фичи,
+   добавленные недавно. Они могут изменяться в следующих версиях.
+2. Можно включить только конкретные фичи. Например:
+   ```ruby
+   require "rspec_magic/stable/use_method_discovery"
+   ```
+3. Настройка `spec_path=` нужна для некоторых фич, например, [include_dir_context](#include_dir_context).
+   Вычисленный путь должен соответствовать `spec/` в директории проекта.
 
 ## Copyright
 

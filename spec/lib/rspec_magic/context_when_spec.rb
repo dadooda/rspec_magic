@@ -16,6 +16,8 @@ describe ".context_when" do
       "when #{h.to_json}"
     end
 
+    # TODO: Intermediate layer.
+
     context_when a: 1, x: "y" do
       description = self.description
       it { expect(description).to eq 'when {"a":1,"x":"y"}' }

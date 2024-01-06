@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-"LODoc"
-
 module RSpecMagic
   # Stable features.
   module Stable
