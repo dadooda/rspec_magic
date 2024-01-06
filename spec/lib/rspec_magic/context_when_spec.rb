@@ -5,9 +5,9 @@ describe ".context_when" do
   context "when default" do
     context_when a: 1, "b" => 2, x: "y" do
       description = self.description
-      it { expect(description).to eq 'when { a: 1, "b" => 2, x: "y" }' }
-      it { expect { c }.to raise_error(NameError, /^undefined local variable or method `c'/) }
       it { expect([a, b, x]).to eq [1, 2, "y"] }
+      it { expect { c }.to raise_error(NameError, /^undefined local variable or method `c'/) }
+      it { expect(description).to eq 'when { a: 1, "b" => 2, x: "y" }' }
     end
   end
 
@@ -16,12 +16,12 @@ describe ".context_when" do
       "when #{h.to_json}"
     end
 
-    # TODO: Intermediate layer.
-
-    context_when a: 1, x: "y" do
-      description = self.description
-      it { expect(description).to eq 'when {"a":1,"x":"y"}' }
-      it { expect([a, x]).to eq [1, "y"] }
+    describe "intermediate context" do
+      context_when a: 1, x: "y" do
+        description = self.description
+        it { expect([a, x]).to eq [1, "y"] }
+        it { expect(description).to eq 'when {"a":1,"x":"y"}' }
+      end
     end
-  end
+  end # context "when customized"
 end

@@ -89,11 +89,9 @@ end
 
 См. [Подробно](#про-context_when).
 
-💧💧💧 ВЫШЕ ВСЁ ЧИСТО! 💧💧💧
-
 ### `described_sym`
 
-Transform <tt>described_class</tt> into an underscored symbol.
+`described_sym` и `me` — представление имени `described_class` в виде `Symbol`. Нужно для того, чтобы не «долдонить» мнемоническим названием описываемого класса, например, снова и снова создавая записи с помощью factories.
 
 ```ruby
 describe UserProfile do
@@ -102,15 +100,17 @@ describe UserProfile do
 end
 ```
 
-With a factory:
+С factories:
 
 ```ruby
 describe UserProfile do
-  let(:obj1) { create described_sym }
-  let(:obj2) { create me }
+  let(:uprof1) { create described_sym }
+  let(:uprof2) { create me }
   …
 end
 ```
+
+💧💧💧 ВЫШЕ ВСЁ ЧИСТО! 💧💧💧
 
 ### `include_dir_context`
 
@@ -236,6 +236,14 @@ end
      end
    end
    ```
+
+3. `context_when` эффективно работает в паре с [use_letset](#use_letset), обычно для задания атрибутов тестируемого объекта.
+
+4. Значения `let`-переменных вычисляются на уровне `describe`. Если нужны значения, вычисляемые на уровне `it`, следует использовать обычный `let()` внутри контекста.
+
+
+
+
 
 ## Copyright
 
