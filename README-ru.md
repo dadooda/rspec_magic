@@ -14,7 +14,7 @@
   - [`alias_method`](#alias_method)
   - [`context_when`](#context_when)
   - [`described_sym`](#described_sym)
-  - [`include_dir_context` ♒︎](#include_dir_context-︎)
+  - [`include_dir_context`](#include_dir_context)
   - [`use_letset`](#use_letset)
   - [`use_method_discovery`](#use_method_discovery)
 - [Подробно](#подробно)
@@ -138,7 +138,9 @@ describe UserProfile do
 end
 ```
 
-### `include_dir_context` ♒︎
+### `include_dir_context`
+
+> 💡 *Эта фича добавлена недавно и может меняться. ♒︎*
 
 👉Украл тезисы с Гитхупа, этой штуке тыща лет.
 
@@ -231,7 +233,7 @@ end
    ```ruby
    require "rspec_magic/stable/use_method_discovery"
    ```
-3. Настройка `spec_path=` нужна для некоторых фич, например, [include_dir_context](#include_dir_context-).
+3. Настройка `spec_path=` нужна для некоторых фич, например, [include_dir_context](#include_dir_context).
    Вычисленный путь должен соответствовать `spec/` в директории проекта.
 
 ## Copyright
