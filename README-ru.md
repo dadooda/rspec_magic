@@ -25,7 +25,7 @@
 
 ## Что это?
 
-*An English version of this text is also available: [README.md](README.md).*
+🆎 *An English version of this text is also available: [README.md](README.md).*
 
 RSpecMagic — набор расширений для написания компактных и ёмких RSpec-тестов.
 
@@ -139,8 +139,6 @@ end
 ```
 
 ### `include_dir_context`
-
-> 💡 *Эта фича добавлена недавно и может меняться. ♒︎*
 
 ♒︎ *Эта фича добавлена недавно и может меняться.*
 
