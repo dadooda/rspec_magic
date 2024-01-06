@@ -50,7 +50,7 @@ require "rspec_magic/unstable"
 RSpecMagic::Config.spec_path = File.expand_path(__dir__)
 ```
 
-См. также [Подробно](#про-применение).
+См. [Подробно](#про-применение).
 
 ## Фичи
 
