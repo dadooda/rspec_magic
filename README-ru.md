@@ -1,7 +1,5 @@
 
-# 🟠RSpecMagic
-
-👉Ёмкий заголовок, варианты.
+# Немного магии для RSpec-тестов
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=6 orderedList=false} -->
 
@@ -19,6 +17,7 @@
   - [`use_method_discovery`](#use_method_discovery)
 - [Подробно](#подробно)
   - [Про «Применение»](#про-применение)
+  - [Про `context_when`](#про-context_when)
 - [Copyright](#copyright)
 
 <!-- /code_chunk_output -->
@@ -57,10 +56,7 @@ RSpecMagic::Config.spec_path = File.expand_path(__dir__)
 
 ### `alias_method`
 
-💧💧💧 ВЫШЕ ВСЁ ЧИСТО! 💧💧💧
-
-Method alias matcher.
-Originally from https://gist.github.com/1950961, but heavily reworked consistency-wise.
+Matcher, сверяющий, что метод является alias'ом другого метода.
 
 ```ruby
 describe User do
@@ -91,31 +87,9 @@ context "when { name: \"Joe\", age: 25 }" do
 end
 ```
 
-= Features
+См. [Подробно](#про-context_when).
 
-1.
-
-Prepend +x+ to +context_when+ to exclude it:
-
-```ruby
-xcontext_when … do
-  …
-end
-```
-
-2.
-
-Define a custom formatter via +_context_when_formatter+:
-
-```ruby
-context "…" do
-  def self._context_when_formatter(h)
-    "when #{h.to_json}"
-  end
-
-  …
-end
-```
+💧💧💧 ВЫШЕ ВСЁ ЧИСТО! 💧💧💧
 
 ### `described_sym`
 
@@ -229,12 +203,39 @@ end
 
 1. `stable` и `unstable` — наборы фич. В набор `unstable` входят фичи,
    добавленные недавно. Они могут изменяться в следующих версиях.
+
 2. Можно включить только конкретные фичи. Например:
+
    ```ruby
    require "rspec_magic/stable/use_method_discovery"
    ```
+
 3. Настройка `spec_path=` нужна для некоторых фич, например, [include_dir_context](#include_dir_context).
    Вычисленный путь должен соответствовать `spec/` в директории проекта.
+
+### Про `context_when`
+
+1. Контекст можно исключить из обработки, приписав к началу `"x"`:
+
+   ```ruby
+   xcontext_when … do
+     …
+   end
+   ```
+
+2. Можно определить свой метод для форматирования строки для отчёта:
+
+   ```ruby
+   context "…" do
+     def self._context_when_formatter(h)
+       "when #{h.to_json}"
+     end
+
+     context_when … do
+       …
+     end
+   end
+   ```
 
 ## Copyright
 
