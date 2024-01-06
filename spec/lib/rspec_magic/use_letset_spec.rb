@@ -77,4 +77,67 @@ describe ".use_letset" do
       it { is_expected.to eq(name: "Joe") }
     end
   end # describe "declarative (no block) usage"
+
+  describe "doc examples" do
+    describe "EN" do
+      describe do
+        # Method is `let_a`. Collection is `attrs`.
+        use_letset :let_a, :attrs
+
+        # Declare `attrs` elements.
+        let_a(:age)
+        let_a(:name)
+
+        subject { attrs }
+
+        # None of the elements is set yet.
+        it { is_expected.to eq({}) }
+
+        # Set `name` and see it in the collection.
+        context_when name: "Joe" do
+          it { is_expected.to eq(name: "Joe") }
+
+          # Add `age` and see both in the collection.
+          context_when age: 25 do
+            it { is_expected.to eq(name: "Joe", age: 25) }
+          end
+        end
+      end
+    end # describe "EN"
+
+    describe "RU" do
+      describe do
+        # Метод -- `let_a`. Коллекция -- `attrs`.
+        use_letset :let_a, :attrs
+
+        # Декларируем переменные, которые составляют коллекцию `attrs`.
+        let_a(:age)
+        let_a(:name)
+
+        subject { attrs }
+
+        # Ни одна переменная пока не задана, поэтому коллекция будет пустой.
+        it { is_expected.to eq({}) }
+
+        # Задаём `name` и видим его в коллекции.
+        context_when name: "Joe" do
+          it { is_expected.to eq(name: "Joe") }
+
+          # Задаём `age` и видим обе переменные в коллекции.
+          context_when age: 25 do
+            it { is_expected.to eq(name: "Joe", age: 25) }
+          end
+        end
+      end
+
+      describe do
+        use_letset :let_a, :attrs
+
+        let_a(:age) { 25 }
+        let_a(:name) { "Joe" }
+
+        it { expect(attrs).to eq(name: "Joe", age: 25) }
+      end
+    end # describe "RU"
+  end # describe "doc examples"
 end

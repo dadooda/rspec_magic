@@ -12,7 +12,7 @@
   - [`alias_method`](#alias_method)
   - [`context_when`](#context_when)
   - [`described_sym`](#described_sym)
-  - [`include_dir_context`](#include_dir_context)
+  - [⏳`include_dir_context`](#include_dir_context)
   - [`use_letset`](#use_letset)
   - [`use_method_discovery`](#use_method_discovery)
 - [Подробно](#подробно)
@@ -112,9 +112,7 @@ describe UserProfile do
 end
 ```
 
-💧💧💧 ВЫШЕ ВСЁ ЧИСТО! 💧💧💧
-
-### `include_dir_context`
+### ⏳`include_dir_context`
 
 ♒︎ *Эта фича добавлена недавно и может измениться.*
 
@@ -159,16 +157,22 @@ describe do
 end
 ```
 
-Бла-бла, `let_a` может работать и как обычный `let`:
+`let_a` может работать и как обычный `let`. Такой вариант изредка тоже бывает полезен:
 
 ```ruby
-let_a(:name) { "Joe" }
-let_a(:age) { 25 }
+describe do
+  use_letset :let_a, :attrs
+
+  let_a(:age) { 25 }
+  let_a(:name) { "Joe" }
+
+  it { expect(attrs).to eq(name: "Joe", age: 25) }
+end
 ```
 
-Такой вариант применения более редок, но иногда тоже бывает полезен.
-
 ### `use_method_discovery`
+
+💧💧💧 ВЫШЕ ВСЁ ЧИСТО КРОМЕ ⏳ 💧💧💧
 
 Создаём автоматическую `let`-переменную, содержащую имя метода или action,
 вычисленное из текста вышестоящего `describe`.
