@@ -93,7 +93,7 @@ end
 
 `described_sym` и `me` — представление имени `described_class` в виде `Symbol`.
 Помогает не «долдонить» мнемоническим названием тестируемого класса, например,
-при создании записей с помощью factories.
+при создании записей с помощью factory.
 
 ```ruby
 describe UserProfile do
