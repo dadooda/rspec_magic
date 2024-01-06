@@ -91,7 +91,9 @@ end
 
 ### `described_sym`
 
-`described_sym` и `me` — представление имени `described_class` в виде `Symbol`. Нужно для того, чтобы не «долдонить» мнемоническим названием описываемого класса, например, снова и снова создавая записи с помощью factories.
+`described_sym` и `me` — представление имени `described_class` в виде `Symbol`.
+Помогает не «долдонить» мнемоническим названием тестируемого класса, например,
+при создании записей с помощью factories.
 
 ```ruby
 describe UserProfile do
@@ -100,7 +102,7 @@ describe UserProfile do
 end
 ```
 
-С factories:
+С factory:
 
 ```ruby
 describe UserProfile do
@@ -240,10 +242,6 @@ end
 3. `context_when` эффективно работает в паре с [use_letset](#use_letset), обычно для задания атрибутов тестируемого объекта.
 
 4. Значения `let`-переменных вычисляются на уровне `describe`. Если нужны значения, вычисляемые на уровне `it`, следует использовать обычный `let()` внутри контекста.
-
-
-
-
 
 ## Copyright
 
