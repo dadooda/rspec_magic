@@ -231,7 +231,7 @@ end
    ```ruby
    require "rspec_magic/stable/use_method_discovery"
    ```
-3. Настройка `spec_path=` нужна для некоторых фич, например, [include_dir_context](#include_dir_context).
+3. Настройка `spec_path=` нужна для некоторых фич, например, [include_dir_context](#include_dir_context-).
    Вычисленный путь должен соответствовать `spec/` в директории проекта.
 
 ## Copyright
