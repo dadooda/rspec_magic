@@ -118,6 +118,33 @@ end
 
 ♒︎ *Эта фича добавлена недавно и может измениться.*
 
+Есть у RSpec такая классная штука — [shared_context](https://rspec.info/features/3-12/rspec-core/example-groups/shared-context/).
+Замысел простой — мы где-то создаём набор чего-то общего через `shared_context "то и сё"`,
+а потом через `include_context "то и сё"` включаем это в текущий тест.
+Наполнять `share_context` можно чем угодно — общими тестами, `before`-блоками, `let`-переменными, *но главное* — 
+методами уровня `describe` (`self.doit`) и методами уровня `it` (`def doit`).
+
+✍✍✍
+
+
+Их можно где-то создавать, а потом включать в текущий контекст с помощью `include_context`, указав имя.
+
+
+
+
+
+RSpec's shared contexts are a great way to organize group's shared stuff like examples and defs. Sadly enough, there aren't many public sources which guide how to organize shared contexts properly.
+
+include_dir_context is a nice hack you can use straight ahead to have a hierarchy of autoloaded shared contexts.
+
+No gems or other dependencies are required, all you need is this README page.
+
+Usage
+Copy code from spec_helper.rb to your top-level spec_helper.rb.
+To define a shared "sub-context", use shared_context __dir__ do in a spec_helper.rb at appropriate level.
+To load shared contexts, use include_dir_context __dir__ in an example group.
+
+
 👉Украл тезисы с Гитхупа, этой штуке тыща лет.
 
 Include hierarchical contexts from <tt>spec/</tt> up to spec root.
@@ -200,8 +227,8 @@ end
 ```
 
 `m` находит ближайший контекст, формат текста которого допускает выемку имени метода.
-См. (1) — контекст `"intermediate context"` описывает явно не метод, поэтому `m` его
-пропустила и сработала на `"GET some_action"`.
+См. (1) — `m` пропустила вольно отформатированный `"intermediate context"` и сработала
+на `"GET some_action"`.
 
 ## Подробно
 
@@ -245,7 +272,7 @@ end
 
 3. `context_when` эффективно работает в паре с [use_letset](#use_letset), обычно для задания атрибутов тестируемого объекта.
 
-4. Значения `let`-переменных вычисляются на уровне `describe`. Если нужны значения, вычисляемые на уровне `it`, следует использовать обычный `let()` внутри контекста.
+4. Значения `let`-переменных вычисляются на уровне `describe`. Если нужны значения, вычисляемые на уровне `it`, следует использовать обычный `let(…) { … }` внутри контекста.
 
 ## Copyright
 
