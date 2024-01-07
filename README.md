@@ -7,6 +7,9 @@
 
 - [Overview](#overview)
 - [Setup](#setup)
+- [Features](#features)
+  - [`alias_method`](#alias_method)
+  - [`context_when`](#context_when)
 - [Details](#details)
   - [On setup](#on-setup)
 
@@ -39,16 +42,48 @@ RSpecMagic::Config.spec_path = File.expand_path(".", __dir__)
 ```
 
 The `spec_path=` setting is used by some features, notably, [include_dir_context](#include_dir_context).
-The path computed should point to `spec/` of the project's directory.
+The computed path should point to `spec/` of the project's directory.
 
 See [Details](#on-setup).
 
 💧💧💧 ALL ABOVE THIS LINE IS CLEAR 💧💧💧
 
-Настройка `spec_path=` нужна для некоторых фич, например, [include_dir_context](#include_dir_context).
-Вычисленный путь должен указывать на `spec/` в директории проекта.
+## Features
 
-См. [Подробно](#про-установку).
+### `alias_method`
+
+A matcher to check that a method is an alias of another method.
+
+```ruby
+describe User do
+  it { is_expected.to alias_method(:admin?, :is_admin) }
+end
+```
+
+### `context_when`
+
+Create a self-descriptive <tt>"when …"</tt> context with one or more `let` variables defined.
+The blocks below are synonymous.
+
+```ruby
+context_when name: "Joe", age: 25 do
+  it does
+    expect([name, age]).to eq ["Joe", 25]
+  end
+end
+```
+
+```ruby
+context "when { name: \"Joe\", age: 25 }" do
+  let(:name) { "Joe" }
+  let(:age) { 25 }
+  it does
+    expect([name, age]).to eq ["Joe", 25]
+  end
+end
+```
+
+See [Details](#about-context_when).
 
 ## Details
 
