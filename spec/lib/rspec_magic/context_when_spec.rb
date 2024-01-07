@@ -24,4 +24,22 @@ describe ".context_when" do
       end
     end
   end # context "when customized"
+
+  describe "doc examples" do
+    describe "*" do
+      context_when name: "Joe", age: 25 do
+        it do
+          expect([name, age]).to eq ["Joe", 25]
+        end
+      end
+
+      context "when { name: \"Joe\", age: 25 }" do
+        let(:name) { "Joe" }
+        let(:age) { 25 }
+        it do
+          expect([name, age]).to eq ["Joe", 25]
+        end
+      end
+    end
+  end # describe "doc examples"
 end

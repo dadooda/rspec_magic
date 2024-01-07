@@ -73,8 +73,6 @@ end
 Создаём стереотипный контекст, задающий внутри себя одну или несколько `let`-переменных.
 Блоки ниже взаимозаменяемы.
 
-👉В RSpec!
-
 ```ruby
 context_when name: "Joe", age: 25 do
   it do
@@ -125,10 +123,12 @@ end
 Организуем общие контексты (`shared_context`) в иерархии.
 Автоматически включаем иерархию нужных общих контекстов в наш тест.
 
-1. Убеждаемся, что в настройках правильно прописан `RSpecMagic::Config.spec_path`.
-   Он указывает на `spec/`.
+Шаги:
 
-2. По файловому дереву наших тестов создаём файлы общих контекстов *с одинаковым именем,* например, `_context.rb`.
+1. Убеждаемся, что в настройках правильно прописан `RSpecMagic::Config.spec_path`.
+   Он должен указывать на `spec/`.
+
+2. По файловому дереву тестов создаём файлы общих контекстов *с одинаковым именем,* например, `_context.rb`.
 
 3. Содержимое `_context.rb` всегда имеет вид:
 
@@ -166,40 +166,6 @@ spec/_context.rb
 ```
 
 См. [Подробно](#про-include_dir_context).
-
-- - -
-
-✍✍✍
-
-
-Их можно где-то создавать, а потом включать в текущий контекст с помощью `include_context`, указав имя.
-
-
-
-
-
-RSpec's shared contexts are a great way to organize group's shared stuff like examples and defs. Sadly enough, there aren't many public sources which guide how to organize shared contexts properly.
-
-include_dir_context is a nice hack you can use straight ahead to have a hierarchy of autoloaded shared contexts.
-
-No gems or other dependencies are required, all you need is this README page.
-
-Usage
-Copy code from spec_helper.rb to your top-level spec_helper.rb.
-To define a shared "sub-context", use shared_context __dir__ do in a spec_helper.rb at appropriate level.
-To load shared contexts, use include_dir_context __dir__ in an example group.
-
-
-👉Украл тезисы с Гитхупа, этой штуке тыща лет.
-
-Include hierarchical contexts from <tt>spec/</tt> up to spec root.
-
-```ruby
-describe Something do
-  include_dir_context __dir__
-  …
-end
-```
 
 ### `use_letset`
 
