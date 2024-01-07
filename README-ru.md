@@ -126,8 +126,7 @@ end
    Он должен указывать на `spec/`.
 
 2. По файловому дереву тестов создаём файлы общих контекстов *с одинаковым именем,* например, `_context.rb`.
-
-3. Содержимое `_context.rb` всегда имеет вид:
+   Содержимое `_context.rb` всегда имеет вид:
 
    ```ruby
    shared_context __dir__ do
@@ -135,14 +134,14 @@ end
    end
    ```
 
-4. Добавляем в условный `spec_helper.rb`:
+3. Добавляем в условный `spec_helper.rb`:
 
    ```ruby
    # Загружаем иерархию shared contexts.
    Dir[File.expand_path("**/_context.rb", __dir__)].each { |fn| require fn }
    ```
 
-5. В spec-файле добавляем вызов `include_dir_context` в тело главного `describe`:
+4. В spec-файле добавляем вызов `include_dir_context` в тело главного `describe`:
 
    ```ruby
    describe … do
@@ -156,10 +155,10 @@ end
 В главный `describe` будут последовательно загружены, *если они есть,* контексты из файлов:
 
 ```
-spec/app/controllers/api/_context.rb
-spec/app/controllers/_context.rb
-spec/app/_context.rb
 spec/_context.rb
+spec/app/_context.rb
+spec/app/controllers/_context.rb
+spec/app/controllers/api/_context.rb
 ```
 
 См. [Подробно](#про-include_dir_context).
