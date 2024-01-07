@@ -7,7 +7,6 @@
 
 - [Что это?](#что-это)
 - [Установка](#установка)
-- [Применение](#применение)
 - [Фичи](#фичи)
   - [`alias_method`](#alias_method)
   - [`context_when`](#context_when)
@@ -16,7 +15,7 @@
   - [`use_letset`](#use_letset)
   - [`use_method_discovery`](#use_method_discovery)
 - [Подробно](#подробно)
-  - [Про «Применение»](#про-применение)
+  - [Про установку](#про-установку)
   - [Про `context_when`](#про-context_when)
   - [Про `include_dir_context`](#про-include_dir_context)
 - [Copyright](#copyright)
@@ -40,8 +39,6 @@ gem "rspec_magic"
 #gem "rspec_magic", git: "https://github.com/dadooda/rspec_magic"
 ```
 
-## Применение
-
 Добавляем в автозагрузку RSpec (обычно это `spec/spec_helper.rb`):
 
 ```ruby
@@ -54,7 +51,7 @@ RSpecMagic::Config.spec_path = File.expand_path(".", __dir__)
 Настройка `spec_path=` нужна для некоторых фич, например, [include_dir_context](#include_dir_context).
 Вычисленный путь должен указывать на `spec/` в директории проекта.
 
-См. [Подробно](#про-применение).
+См. [Подробно](#про-установку).
 
 ## Фичи
 
@@ -243,7 +240,7 @@ end
 
 ## Подробно
 
-### Про «Применение»
+### Про установку
 
 1. `stable` и `unstable` — наборы фич. В набор `unstable` входят фичи,
    добавленные недавно. Они могут измениться в следующих версиях.
