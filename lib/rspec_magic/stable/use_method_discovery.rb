@@ -63,5 +63,3 @@ module RSpecMagic; module Stable
     config.extend UseMethodDiscovery::Exports
   end
 end; end
-
-# OPTIMIZE: Add tests.

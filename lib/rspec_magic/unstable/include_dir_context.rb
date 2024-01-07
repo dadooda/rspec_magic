@@ -35,5 +35,3 @@ module RSpecMagic; module Unstable
     config.extend IncludeDirContext::Exports
   end
 end; end
-
-# OPTIMIZE: Find and revive my older tests for this.

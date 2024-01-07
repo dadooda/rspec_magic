@@ -1,4 +1,13 @@
 
 # A little bit of magic for RSpec tests
 
-This is a collection of RSPec extensions to code less and achieve more. Much more.
+<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+- [Trr prr!](#trr-prr)
+
+<!-- /code_chunk_output -->
+
+
+## Trr prr!
