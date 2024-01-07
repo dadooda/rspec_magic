@@ -48,8 +48,11 @@ gem "rspec_magic"
 require "rspec_magic/stable"
 require "rspec_magic/unstable"
 
-RSpecMagic::Config.spec_path = File.expand_path(__dir__)
+RSpecMagic::Config.spec_path = File.expand_path(".", __dir__)
 ```
+
+Настройка `spec_path=` нужна для некоторых фич, например, [include_dir_context](#include_dir_context).
+Вычисленный путь должен указывать на `spec/` в директории проекта.
 
 См. [Подробно](#про-применение).
 
@@ -120,7 +123,47 @@ end
 ♒︎ *Эта фича добавлена недавно и может измениться.*
 
 Организуем общие контексты (`shared_context`) в иерархии.
-Автоматически включаем иерархию нужных общих контекстов в spec-файл.
+Автоматически включаем иерархию нужных общих контекстов в наш тест.
+
+1. Убеждаемся, что в настройках правильно прописан `RSpecMagic::Config.spec_path`.
+   Он указывает на `spec/`.
+
+2. По файловому дереву наших тестов создаём файлы общих контекстов *с одинаковым именем,* например, `_context.rb`.
+
+3. Содержимое `_context.rb` всегда имеет вид:
+
+   ```ruby
+   shared_context __dir__ do
+     …
+   end
+   ```
+
+4. Добавляем в условный `spec_helper.rb`:
+
+   ```ruby
+   # Загружаем иерархию shared contexts.
+   Dir[File.expand_path("**/_context.rb", __dir__)].each { |fn| require fn }
+   ```
+
+5. В spec-файле добавляем вызов `include_dir_context` в тело главного `describe`:
+
+   ```ruby
+   describe … do
+     include_dir_context __dir__
+     …
+   end
+   ```
+
+Например, наш spec-файл это `spec/app/controllers/api/player_controller_spec.rb`.
+
+В главный `describe` будут последовательно загружены, *если они есть,* контексты из файлов:
+
+```
+spec/app/controllers/api/_context.rb
+spec/app/controllers/_context.rb
+spec/app/_context.rb
+spec/_context.rb
+```
 
 См. [Подробно](#про-include_dir_context).
 
@@ -244,9 +287,6 @@ end
    ```ruby
    require "rspec_magic/stable/use_method_discovery"
    ```
-
-3. Настройка `spec_path=` нужна для некоторых фич, например, [include_dir_context](#include_dir_context).
-   Вычисленный путь должен соответствовать `spec/` в директории проекта.
 
 ### Про `context_when`
 
