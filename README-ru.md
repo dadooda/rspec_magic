@@ -26,7 +26,7 @@
 
 🆎 *An English version of this text is also available: [README.md](README.md).*
 
-RSpecMagic — набор расширений для написания компактных и ёмких тестов.
+RSpecMagic — набор расширений для написания компактных и выразительных тестов.
 
 ## Установка
 
