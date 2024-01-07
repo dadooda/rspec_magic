@@ -2,6 +2,8 @@
 describe "`#described_sym` and friends" do
   use_method_discovery :m
 
+  # WARNING! These are real, global classes we create here.
+
   class CSVRow; end
 
   class PageTitle

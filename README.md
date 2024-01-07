@@ -10,6 +10,8 @@
 - [Features](#features)
   - [`alias_method`](#alias_method)
   - [`context_when`](#context_when)
+  - [`described_sym`](#described_sym)
+  - [`include_dir_context`](#include_dir_context)
 - [Details](#details)
   - [On setup](#on-setup)
 
@@ -44,9 +46,9 @@ RSpecMagic::Config.spec_path = File.expand_path(".", __dir__)
 The `spec_path=` setting is used by some features, notably, [include_dir_context](#include_dir_context).
 The computed path should point to `spec/` of the project's directory.
 
-See [Details](#on-setup).
+👉Проверил ссылку.
 
-💧💧💧 ALL ABOVE THIS LINE IS CLEAR 💧💧💧
+See [Details](#on-setup).
 
 ## Features
 
@@ -67,7 +69,7 @@ The blocks below are synonymous.
 
 ```ruby
 context_when name: "Joe", age: 25 do
-  it does
+  it do
     expect([name, age]).to eq ["Joe", 25]
   end
 end
@@ -77,13 +79,92 @@ end
 context "when { name: \"Joe\", age: 25 }" do
   let(:name) { "Joe" }
   let(:age) { 25 }
-  it does
+  it do
     expect([name, age]).to eq ["Joe", 25]
   end
 end
 ```
 
+👉Проверил ссылку.
+
 See [Details](#about-context_when).
+
+### `described_sym`
+
+Transform `described_class` into underscored symbols `described_sym` and `me`.
+
+```ruby
+describe UserProfile do
+  it { expect(described_sym).to eq :user_profile }
+  it { expect(me).to eq :user_profile }
+end
+```
+
+Common usage with a factory:
+
+```ruby
+describe UserProfile do
+  let(:uprof1) { create described_sym }
+  let(:uprof2) { create me }
+  …
+end
+```
+
+💧💧💧 ALL ABOVE THIS LINE IS CLEAN-1 💧💧💧
+
+### `include_dir_context`
+
+♒︎ *This feature was added recently and may change.*
+
+Organize shared contexts (`shared_context`) in a hierarchy.
+Include relevant shared contexts in our test.
+
+Follow these steps:
+
+1. Make sure that `RSpecMagic::Config.spec_path` is configured correctly.
+   It must point to project's `spec/`.
+
+
+🔴🔴🔴STOPPED HERE
+
+2. Based on the test file tree, we create files of common contexts *with the same name,* for example, `_context.rb`.
+    The contents of `_context.rb` always look like this:
+
+   ```ruby
+   shared_context __dir__ do
+     …
+   end
+   ```
+
+3. Add to the conditional `spec_helper.rb`:
+
+   ```ruby
+   # Load the shared contexts hierarchy.
+   Dir[File.expand_path("**/_context.rb", __dir__)].each { |fn| require fn }
+   ```
+
+
+4. In the spec file, add the `include_dir_context` call to the body of the main `describe`:
+
+   ```ruby
+   describe … do
+     include_dir_context __dir__
+     …
+   end
+   ```
+
+For example, our spec file is `spec/app/controllers/api/player_controller_spec.rb`.
+
+*if any* contexts from the files will be sequentially loaded into the main `describe`:
+
+```
+spec/_context.rb
+spec/app/_context.rb
+spec/app/controllers/_context.rb
+spec/app/controllers/api/_context.rb
+```
+
+See [Details](#about-include_dir_context).
 
 ## Details
 
