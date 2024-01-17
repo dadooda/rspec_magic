@@ -1,4 +1,5 @@
 
+require "rspec_magic"
 require "rspec_magic/stable"
 require "rspec_magic/unstable"
 
