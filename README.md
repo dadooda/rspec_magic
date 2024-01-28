@@ -113,7 +113,7 @@ end
 
 ### `include_dir_context`
 
-♒︎ *This feature was added recently and may change.*
+♒︎ *This feature was added recently and may change in the coming versions.*
 
 Organize shared contexts ([shared_context](https://rspec.info/features/3-12/rspec-core/example-groups/shared-context/)) in a hierarchy.
 Import relevant shared contexts into the given test.
