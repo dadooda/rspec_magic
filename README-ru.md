@@ -34,14 +34,14 @@ RSpecMagic — набор расширений для написания ком�
 
 Добавляем в `Gemfile`:
 
-```ruby
+```rb
 gem "rspec_magic"
 #gem "rspec_magic", git: "https://github.com/dadooda/rspec_magic"
 ```
 
 Добавляем в автозагрузку RSpec (обычно это `spec/spec_helper.rb`):
 
-```ruby
+```rb
 require "rspec_magic/stable"
 require "rspec_magic/unstable"
 
@@ -59,7 +59,7 @@ RSpecMagic::Config.spec_path = File.expand_path(".", __dir__)
 
 Matcher, сверяющий, что метод является alias'ом другого метода.
 
-```ruby
+```rb
 describe User do
   it { is_expected.to alias_method(:admin?, :is_admin) }
 end
@@ -70,7 +70,7 @@ end
 Создаём стереотипный контекст, задающий внутри себя одну или несколько `let`-переменных.
 Блоки ниже взаимозаменяемы.
 
-```ruby
+```rb
 context_when name: "Joe", age: 25 do
   it do
     expect([name, age]).to eq ["Joe", 25]
@@ -78,7 +78,7 @@ context_when name: "Joe", age: 25 do
 end
 ```
 
-```ruby
+```rb
 context "when { name: \"Joe\", age: 25 }" do
   let(:name) { "Joe" }
   let(:age) { 25 }
@@ -91,7 +91,11 @@ end
 Для значений, вычисляемых на уровне `it` предусмотрена `Proc`-форма:
 
 ```rb
-trr(:prr)!
+context_when a: 10, b: -> { a*2 }, b_label: "a*2" do
+  it do
+    expect(b).to eq 20
+  end
+end
 ```
 
 См. [Подробно](#про-context_when).
@@ -102,7 +106,7 @@ trr(:prr)!
 Помогает не «долдонить» мнемоническим названием тестируемого класса, например,
 при создании записей с помощью factory.
 
-```ruby
+```rb
 describe UserProfile do
   it { expect(described_sym).to eq :user_profile }
   it { expect(me).to eq :user_profile }
@@ -111,7 +115,7 @@ end
 
 С factory:
 
-```ruby
+```rb
 describe UserProfile do
   let(:uprof1) { create described_sym }
   let(:uprof2) { create me }
@@ -134,7 +138,7 @@ end
 2. По файловому дереву тестов создаём файлы общих контекстов *с одинаковым именем,* например, `_context.rb`.
    Содержимое `_context.rb` всегда имеет вид:
 
-    ```ruby
+    ```rb
     shared_context __dir__ do
       …
     end
@@ -142,14 +146,14 @@ end
 
 3. Добавляем в условный `spec_helper.rb`:
 
-    ```ruby
+    ```rb
     # Загружаем иерархию shared contexts.
     Dir[File.expand_path("**/_context.rb", __dir__)].each { |fn| require fn }
     ```
 
 4. В spec-файле добавляем вызов `include_dir_context` в тело главного `describe`:
 
-    ```ruby
+    ```rb
     describe … do
       include_dir_context __dir__
       …
@@ -173,7 +177,7 @@ spec/app/controllers/api/_context.rb
 
 Создаём на уровне `describe` метод для задания `let`-переменных, автоматически составляющих коллекцию типа `Hash`.
 
-```ruby
+```rb
 describe do
   # Метод -- `let_a`. Коллекция -- `attrs`.
   use_letset :let_a, :attrs
@@ -201,7 +205,7 @@ end
 
 Если передан блок, `let_a` работает как обычный `let`. Такой вариант изредка тоже бывает полезен:
 
-```ruby
+```rb
 describe do
   use_letset :let_a, :attrs
 
@@ -217,7 +221,7 @@ end
 Создаём автоматическую `let`-переменную, содержащую имя метода или action,
 вычисленное из текста вышестоящего `describe`.
 
-```ruby
+```rb
 describe do
   use_method_discovery :m
 
@@ -252,7 +256,7 @@ end
 
 2. Можно включить только конкретные фичи. Например:
 
-    ```ruby
+    ```rb
     require "rspec_magic/stable/use_method_discovery"
     ```
 
@@ -260,7 +264,7 @@ end
 
 1. Контекст можно исключить из обработки, приписав к началу `x`:
 
-    ```ruby
+    ```rb
     xcontext_when … do
       …
     end
@@ -268,7 +272,7 @@ end
 
 2. Можно определить свой метод форматирования строки для отчёта:
 
-    ```ruby
+    ```rb
     describe "…" do
       def self._context_when_formatter(h)
         "when #{h.to_json}"
@@ -307,7 +311,7 @@ RSpec не позволяет организовывать общие конте
 Чтобы поддерживать мало-мальский порядок, приходится натужно придумывать общим контекстам
 уникальные имена, и *в каждом* spec-файле перечислять импортируемое унылым повторяющимся списком:
 
-```ruby
+```rb
 describe … do
   include_context "basic"
   include_context "controllers"
