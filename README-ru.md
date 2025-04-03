@@ -88,6 +88,12 @@ context "when { name: \"Joe\", age: 25 }" do
 end
 ```
 
+Для значений, вычисляемых на уровне `it` предусмотрена `Proc`-форма:
+
+```rb
+trr(:prr)!
+```
+
 См. [Подробно](#про-context_when).
 
 ### `described_sym`
