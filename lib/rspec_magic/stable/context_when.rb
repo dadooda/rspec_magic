@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# AF: TODO: Reformat upon touch, convert to @example. These LODocs aren't real, they're all code.
 "LODoc"
 
 module RSpecMagic; module Stable

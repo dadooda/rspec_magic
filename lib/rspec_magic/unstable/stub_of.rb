@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-# AF: TODO: Fin.
+# AF: TODO: Fin. @example straight away.
+
+# AF: TODO: Spec.
 
 module RSpecMagic; module Unstable
   # Tralala some description.

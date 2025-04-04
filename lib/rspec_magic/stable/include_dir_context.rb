@@ -2,7 +2,7 @@
 
 require_relative "../config"
 
-module RSpecMagic; module Unstable
+module RSpecMagic; module Stable
   # Organize shared contexts in a hierarchy.
   # Import relevant shared contexts into the given test.
   #
